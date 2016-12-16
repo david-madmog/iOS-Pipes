@@ -22,32 +22,58 @@ import UIKit
     override init(frame: CGRect) {
         // Used by Interface Builder
         super.init(frame: frame)
-        setupButtons()
+        setupButtons(rows:5, cols:5)
     }
     
     required init(coder: NSCoder)
     {
         // Used by runtime
         super.init(coder: coder)
-        setupButtons()
+        setupButtons(rows:5, cols:5)
     }
 
-    private func setupButtons() {
+    private func setupButtons(rows: Int, cols: Int) {
+        
+        let invRows: CGFloat = CGFloat(1.0) / CGFloat(rows)
+        let invCols: CGFloat = CGFloat(1.0) / CGFloat(cols)
+        
+        for row in 1...rows {
+            // Create a horizontal stack view
+            let HSV = UIStackView()
+            
+            addArrangedSubview(HSV)
+            HSV.axis = UILayoutConstraintAxis.horizontal
+            HSV.heightAnchor.constraint(equalTo: super.heightAnchor, multiplier: invRows).isActive = true
+            HSV.widthAnchor.constraint(equalTo: super.widthAnchor, multiplier: 1).isActive = true
+            
+            for col in 1...cols {
+                let button = UIButton()
+                switch (row + col) % 3 {
+                case 0:
+                    button.backgroundColor = UIColor.red
+                case 1:
+                    button.backgroundColor = UIColor.green
+                default:
+                    button.backgroundColor = UIColor.blue
+                }
+               
+                // Add the button to the stack
+                HSV.addArrangedSubview(button)
+
+                // Add constraints
+                //button.translatesAutoresizingMaskIntoConstraints = false
+                button.heightAnchor.constraint(equalTo: HSV.heightAnchor, multiplier: 1).isActive = true
+                button.widthAnchor.constraint(equalTo: HSV.widthAnchor, multiplier: invCols).isActive = true
+                button.addTarget(self, action: #selector(PipesGrid.CellClicked(button:)), for: .touchUpInside)
+                //button.center = CGPoint(x:20, y:20)
+                //button.frame = CGRect(x:100, y:100, width:50, height:50)
+                
+            }
+            
+        }
+        
         
         // Create the button
-        let button = UIButton()
-        button.backgroundColor = UIColor.red
-        
-        // Add constraints
-        button.translatesAutoresizingMaskIntoConstraints = false
-        //button.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
-        //button.widthAnchor.constraint(equalToConstant: 44.0).isActive = true
-        button.addTarget(self, action: #selector(PipesGrid.CellClicked(button:)), for: .touchUpInside)
-        //button.center = CGPoint(x:20, y:20)
-        button.frame = CGRect(x:100, y:100, width:500, height:50)
-        
-        // Add the button to the stack
-        addSubview(button)
     }
 
     //MARK: Button pressed
