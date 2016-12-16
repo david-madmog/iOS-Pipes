@@ -14,6 +14,7 @@
 		7D0401B51E03F69E00B7E49E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D0401B31E03F69E00B7E49E /* LaunchScreen.storyboard */; };
 		7D0401C01E03F69E00B7E49E /* PipesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0401BF1E03F69E00B7E49E /* PipesTests.swift */; };
 		7D0401CB1E03F69E00B7E49E /* PipesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0401CA1E03F69E00B7E49E /* PipesUITests.swift */; };
+		7D0401D91E03F7CC00B7E49E /* PipesGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0401D81E03F7CC00B7E49E /* PipesGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		7D0401C61E03F69E00B7E49E /* PipesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PipesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D0401CA1E03F69E00B7E49E /* PipesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipesUITests.swift; sourceTree = "<group>"; };
 		7D0401CC1E03F69E00B7E49E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7D0401D81E03F7CC00B7E49E /* PipesGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipesGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			children = (
 				7D0401AA1E03F69E00B7E49E /* AppDelegate.swift */,
 				7D0401AC1E03F69E00B7E49E /* ViewController.swift */,
+				7D0401D81E03F7CC00B7E49E /* PipesGrid.swift */,
 				7D0401AE1E03F69E00B7E49E /* Main.storyboard */,
 				7D0401B11E03F69E00B7E49E /* Assets.xcassets */,
 				7D0401B31E03F69E00B7E49E /* LaunchScreen.storyboard */,
@@ -263,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D0401AD1E03F69E00B7E49E /* ViewController.swift in Sources */,
+				7D0401D91E03F7CC00B7E49E /* PipesGrid.swift in Sources */,
 				7D0401AB1E03F69E00B7E49E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,6 +421,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8H88VSXRAV;
 				INFOPLIST_FILE = Pipes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.uk.madmog.Pipes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -430,6 +435,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8H88VSXRAV;
 				INFOPLIST_FILE = Pipes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.uk.madmog.Pipes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
