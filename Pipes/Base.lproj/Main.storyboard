@@ -21,12 +21,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hHY-F0-Her" customClass="PipesGrid" customModule="Pipes" customModuleProvider="target">
-                                <rect key="frame" x="20" y="20" width="343" height="343"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="375"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AsH-Tw-DK5">
+                                <rect key="frame" x="16" y="449" width="76" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Randomize"/>
+                                <connections>
+                                    <action selector="RandomizeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vfh-cx-2U6"/>
+                                </connections>
+                            </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progressViewStyle="bar" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="Yef-sH-XfZ">
+                                <rect key="frame" x="0.0" y="402" width="375" height="3"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                            </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8U3-yc-vQn">
+                                <rect key="frame" x="8" y="412" width="358" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="Grid" destination="hHY-F0-Her" id="0Yn-K9-Bu2"/>
+                        <outlet property="Progress" destination="Yef-sH-XfZ" id="etd-fQ-AWE"/>
+                        <outlet property="ScoreLabel" destination="8U3-yc-vQn" id="zEB-Vu-V3k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
