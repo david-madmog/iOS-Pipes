@@ -11,18 +11,19 @@ import UIKit
 class PipesGridCell: UIButton {
   
     var connections : [Bool] = Array(repeating: false, count: 4)
-    var bundle: Bundle?
     var neighbours : [PipesGridCell?] = Array(repeating: nil, count: 4)
     var MyRC = (row: 0, col: 0)
     var isRoot = false 
     var isConnectedToRoot = false
+    var greyPC = 0
+    var greyStart = -1
     
-     func isEmpty() -> Bool
+    func isEmpty() -> Bool
     {
         return !(connections[0] || connections[1] || connections[2] || connections[3])
     }
     
-    func  opposite(Dir: Int) -> Int
+    static func opposite(Dir: Int) -> Int
     {
         return (Dir + 2) % 4
     }
@@ -46,6 +47,10 @@ class PipesGridCell: UIButton {
     private func RandomBool() -> Bool {
         return (arc4random_uniform(UInt32(1000)) < 500 ? true : false)
     }
+
+    private func RandomFlt() -> CGFloat {
+        return CGFloat(arc4random_uniform(UInt32(255))) / 255.0
+    }
     
     func rotate() {
         let tmp = connections[0]
@@ -53,11 +58,9 @@ class PipesGridCell: UIButton {
         connections[1] = connections[2]
         connections[2] = connections[3]
         connections[3] = tmp ;
-        
-        mySetImage()
     }
     
-    func image() -> String? {
+    func mySetImage(ImageFactory: PipesImageFactory) {
         var Pattern = 0
         
         // determine shape in the array
@@ -67,7 +70,7 @@ class PipesGridCell: UIButton {
         Pattern += (connections[3] ? 2 : 0)
 
         var bFull: Bool = true
-        var Name: String
+        let Colour: String
         
         // Determine the colour to use
         if isConnectedToRoot {
@@ -76,7 +79,7 @@ class PipesGridCell: UIButton {
                 //see if properly connected in all 4 directions
                 if connections[Dir] {
                     if neighbours[Dir] != nil {
-                        if !neighbours[Dir]!.connections[opposite(Dir: Dir)] {
+                        if !neighbours[Dir]!.connections[PipesGridCell.opposite(Dir: Dir)] {
                             bFull = false
                         }
                     } else {
@@ -85,25 +88,20 @@ class PipesGridCell: UIButton {
                 }
             }
             if bFull {
-                Name = "G" + String(Pattern)
+                Colour = "G"
             } else {
-                Name = "O" + String(Pattern)
+                Colour = "O"
             }
         } else {
             // not connected
-            Name = "R" + String(Pattern)
+            Colour = "R"
         }
         
-        return Name
+        super.setImage(ImageFactory.PipeImage(colour: Colour, connections: Pattern, greyPC: greyPC, greyStart: greyStart), for: .normal)
     }
     
-    func mySetImage() {
-        super.setImage(UIImage(named: self.image()!, in: bundle, compatibleWith: self.traitCollection), for: .normal)
-    }
-
-    //MARK: Button pressed
-    func CellClicked(button: PipesGridCell)
-    {
-        button.rotate()
+    func mySetWorkingActivity() {
+        super.setImage(nil, for: .normal)
+        super.backgroundColor = UIColor(red: RandomFlt(), green: RandomFlt(), blue: RandomFlt(), alpha: 1)
     }
  }
