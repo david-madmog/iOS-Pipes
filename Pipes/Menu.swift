@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol ValueReturner {
+    var returnValueToCaller: ((Any) -> ())?  { get set }
+}
+
 class Menu: UIViewController {
 
+    @IBOutlet weak var Score: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,5 +41,17 @@ class Menu: UIViewController {
     @IBAction func unwindToMenu(sender: UIStoryboardSegue) {
         
     }
+   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if var secondViewController = segue.destination as? ValueReturner {
+            secondViewController.returnValueToCaller = GameReturnValue
+        }
+    }
     
+    func GameReturnValue(returnedValue: Any) {
+        // cast returnedValue to the returned value type and do what you want. For example:
+        if let RetScore = returnedValue as? Int {
+            Score.text = "Score: " + String(RetScore)
+        }
+    }
 }

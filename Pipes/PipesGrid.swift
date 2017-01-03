@@ -12,6 +12,7 @@ import UIKit
    
     var Cells = [[PipesGridCell?]]()
     private var ImageFactory: PipesImageFactory?
+    private let FULL = 200
 
     enum GameMode {
         case Initialising
@@ -38,8 +39,8 @@ import UIKit
     {
         // Used by runtime
         super.init(coder: coder)
-        setupButtons(rows:15, cols:10)
-//        setupButtons(rows:7, cols:5)
+//        setupButtons(rows:12, cols:8)
+        setupButtons(rows:7, cols:5)
     }
 
     
@@ -346,7 +347,7 @@ import UIKit
        
     }
     
-    func Fill()
+    func Fill(step: Int = 1)
     {
         var bFull = true
         
@@ -367,12 +368,13 @@ import UIKit
         for A in Cells {
             for Cell in A {
                 // Has this cell started filling
-                if Cell!.greyPC > 0 && Cell!.greyPC < 101 {
-                    Cell!.greyPC += 1
+                if Cell!.greyPC > 0 && Cell!.greyPC < FULL {
+                    Cell!.greyPC += step
                 }
                 // Has it just reached total fullness...?
                 // If so, spread it or spill...
-                if Cell!.greyPC == 100 {
+                if Cell!.greyPC >= 100 && Cell!.greyPC < FULL {
+                    Cell!.greyPC = FULL
                     for Dir in 0...3 {
                         //see if properly connected
                         if Cell!.connections[Dir] {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ValueReturner {
 
     @IBOutlet weak var Grid: PipesGrid!
     @IBOutlet weak var Progress: UIProgressView!
@@ -18,7 +18,8 @@ class ViewController: UIViewController {
     var timer = Timer()
     private var TimerCounter = 0
     var FillingInterval = 2
-    
+    var returnValueToCaller: ((Any) -> ())?
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -79,7 +80,7 @@ class ViewController: UIViewController {
                 Grid.CurrentGameMode = .FinalFilling
             }
         case .FinalFilling:
-            Grid.Fill()
+            Grid.Fill(step: 5)
             _ = Grid.isFinished() // easiest way to redraw...
         case .Spilt:
             let alert = UIAlertController(title: "You spilt the water", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
@@ -103,7 +104,7 @@ class ViewController: UIViewController {
             break // do nothing while waiting for response
         case .Finished:
             timer.invalidate()
-            
+            returnValueToCaller?(Score)
             self.dismiss(animated: true)
         }
     }
