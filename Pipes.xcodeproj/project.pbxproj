@@ -15,9 +15,11 @@
 		7D0401C01E03F69E00B7E49E /* PipesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0401BF1E03F69E00B7E49E /* PipesTests.swift */; };
 		7D0401CB1E03F69E00B7E49E /* PipesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0401CA1E03F69E00B7E49E /* PipesUITests.swift */; };
 		7D0401D91E03F7CC00B7E49E /* PipesGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0401D81E03F7CC00B7E49E /* PipesGrid.swift */; };
+		7D0653E51E1D3CDB001A323E /* Scores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0653E41E1D3CDB001A323E /* Scores.swift */; };
 		7D40687F1E0AA66800E1391F /* PipesImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40687E1E0AA66800E1391F /* PipesImageFactory.swift */; };
 		7D4068811E0AD99000E1391F /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4068801E0AD99000E1391F /* Menu.swift */; };
 		7D98DEE91E0431590089B83D /* PipesGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98DEE81E0431590089B83D /* PipesGridCell.swift */; };
+		7DF6B3F71E1C167200514CDB /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF6B3F61E1C167200514CDB /* Options.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,9 +54,11 @@
 		7D0401CA1E03F69E00B7E49E /* PipesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipesUITests.swift; sourceTree = "<group>"; };
 		7D0401CC1E03F69E00B7E49E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D0401D81E03F7CC00B7E49E /* PipesGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipesGrid.swift; sourceTree = "<group>"; };
+		7D0653E41E1D3CDB001A323E /* Scores.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scores.swift; sourceTree = "<group>"; };
 		7D40687E1E0AA66800E1391F /* PipesImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipesImageFactory.swift; sourceTree = "<group>"; };
 		7D4068801E0AD99000E1391F /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		7D98DEE81E0431590089B83D /* PipesGridCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipesGridCell.swift; sourceTree = "<group>"; };
+		7DF6B3F61E1C167200514CDB /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,10 +111,12 @@
 			children = (
 				7D0401AA1E03F69E00B7E49E /* AppDelegate.swift */,
 				7D0401AC1E03F69E00B7E49E /* ViewController.swift */,
+				7D4068801E0AD99000E1391F /* Menu.swift */,
+				7DF6B3F61E1C167200514CDB /* Options.swift */,
 				7D0401D81E03F7CC00B7E49E /* PipesGrid.swift */,
 				7D98DEE81E0431590089B83D /* PipesGridCell.swift */,
 				7D40687E1E0AA66800E1391F /* PipesImageFactory.swift */,
-				7D4068801E0AD99000E1391F /* Menu.swift */,
+				7D0653E41E1D3CDB001A323E /* Scores.swift */,
 				7D0401AE1E03F69E00B7E49E /* Main.storyboard */,
 				7D0401B11E03F69E00B7E49E /* Assets.xcassets */,
 				7D0401B31E03F69E00B7E49E /* LaunchScreen.storyboard */,
@@ -280,6 +286,8 @@
 				7D0401D91E03F7CC00B7E49E /* PipesGrid.swift in Sources */,
 				7D0401AB1E03F69E00B7E49E /* AppDelegate.swift in Sources */,
 				7D40687F1E0AA66800E1391F /* PipesImageFactory.swift in Sources */,
+				7D0653E51E1D3CDB001A323E /* Scores.swift in Sources */,
+				7DF6B3F71E1C167200514CDB /* Options.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,7 +12,7 @@ import UIKit
    
     var Cells = [[PipesGridCell?]]()
     private var ImageFactory: PipesImageFactory?
-    private let FULL = 200
+    private static let FULL = 200
 
     enum GameMode {
         case Initialising
@@ -39,10 +39,16 @@ import UIKit
     {
         // Used by runtime
         super.init(coder: coder)
-//        setupButtons(rows:12, cols:8)
-        setupButtons(rows:7, cols:5)
     }
 
+    func SetSize(rows: Int, cols: Int) {
+        
+        for SV in self.subviews {
+            self.removeArrangedSubview(SV)
+        }
+        Cells.removeAll(keepingCapacity: true)
+        setupButtons(rows: rows, cols: cols)
+    }
     
     private func setupButtons(rows: Int, cols: Int) {
         
@@ -68,7 +74,9 @@ import UIKit
                 let button = PipesGridCell()
                 button.MyRC = (row, col)
                 Cells[row].append(button)
-                
+                button.contentMode = UIViewContentMode.scaleToFill
+                button.contentVerticalAlignment = UIControlContentVerticalAlignment.fill
+                button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.fill
                 button.mySetImage(ImageFactory: self.ImageFactory!)
                 
                 // Add the button to the stack
@@ -112,7 +120,7 @@ import UIKit
         // called from timer to increase puzzle fill state
         
         if self.CurrentGameMode == .Initialising {
-            // Reset all the cells to empty
+            // First time through: reset all the cells to empty
             for A in Cells {
                 for Cell in A {
                     for k in 0...3 {
@@ -138,7 +146,7 @@ import UIKit
             RandomiseCellRotations()
             _ = CheckCellRootConnections()
             CurrentGameMode = .GracePeriod
-            //Restarts = 0 ;
+            //restarts = 0 ;
         }
     }
     
@@ -188,7 +196,7 @@ import UIKit
                 // Continue from this cell, and pick a direction
                 var k = Int(arc4random_uniform(UInt32(4)))
                 
-                // First time... must be an empty neibour somewhere, so ensure we've hit it
+                // First time this loop... must be an empty neibour somewhere, so ensure we've hit it
                 if bFirstTime {
                     var bLocalDone = false
                     while !bLocalDone {
@@ -325,6 +333,9 @@ import UIKit
         Cell.rotate()
         Cell.mySetImage(ImageFactory: self.ImageFactory!)
         _ = CheckCellRootConnections()
+        if Cell.greyPC >= 100 {
+            Cell.greyPC = 99
+        }
     }
     
     // MARK: timer fired in "Filling" mode
@@ -368,13 +379,13 @@ import UIKit
         for A in Cells {
             for Cell in A {
                 // Has this cell started filling
-                if Cell!.greyPC > 0 && Cell!.greyPC < FULL {
+                if Cell!.greyPC > 0 && Cell!.greyPC < PipesGrid.FULL {
                     Cell!.greyPC += step
                 }
                 // Has it just reached total fullness...?
                 // If so, spread it or spill...
-                if Cell!.greyPC >= 100 && Cell!.greyPC < FULL {
-                    Cell!.greyPC = FULL
+                if Cell!.greyPC >= 100 && Cell!.greyPC < PipesGrid.FULL {
+                    Cell!.greyPC = PipesGrid.FULL
                     for Dir in 0...3 {
                         //see if properly connected
                         if Cell!.connections[Dir] {

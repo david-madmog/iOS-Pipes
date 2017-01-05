@@ -53,6 +53,15 @@ class PipesImageFactory {
         // next, define a path bounding the region we want to overwrite...
         let path : UIBezierPath = UIBezierPath()
         if greyPC < 50 {
+            // Less than 50% - progress from start direction towards centre:
+            //
+            //       +-------+
+            //       |       |
+            //       |       |
+            //       |  ---  |
+            //       | /   \ |
+            //       +/-----\+
+            //
             switch greyStart {
             case 2:
                 path.move(to: CGPoint(x: 0, y: 0))
@@ -81,6 +90,15 @@ class PipesImageFactory {
                 path.addLine(to: CGPoint(x: 100 - greyPC, y: greyPC))
             }
         } else {
+            // Greater than 50% - progress from centre in all directions and full from start:
+            //
+            //       +-------+
+            //       |       |
+            //       |  +-+  |
+            //       |  | |  |
+            //       | /   \ |
+            //       +/-----\+
+            //
             let invPC = 100 - greyPC
             switch greyStart {
             case 2:
