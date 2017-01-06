@@ -83,7 +83,8 @@ class ViewController: UIViewController, GridSettingsAPI {
                 }
             }
             if Grid.isFinished() {
-                Grid.CurrentGameMode = .Finished
+                Grid.CurrentGameMode = .FinalFilling
+                Grid.FillInit()
             }
         case .Filling:
             if TimerCounter % FillingInterval == 0 {
