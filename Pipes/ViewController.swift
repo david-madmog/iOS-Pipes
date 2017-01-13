@@ -96,13 +96,13 @@ class ViewController: UIViewController, GridSettingsAPI {
                 Grid.CurrentGameMode = .FinalFilling
             }
         case .FinalFilling:
-            Grid.Fill(step: 5)
+            Grid.Fill(step: 10)
             _ = Grid.isFinished() // easiest way to redraw...
         case .Spilt:
             currScore.restarts! += 1
             
             // Ask the user what they want to do, and set state accordingly
-            let alert = UIAlertController(title: "You spilt the water", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+            let alert = UIAlertController(title: "Spill", message:"You spilt the water", preferredStyle: UIAlertControllerStyle.actionSheet)
             let abandon = UIAlertAction(title: "Abandon Game", style: UIAlertActionStyle.default) { (action: UIAlertAction) -> Void in
                 self.Grid.CurrentGameMode = .Finished
                 self.currScore.value = 0

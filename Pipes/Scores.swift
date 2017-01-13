@@ -68,28 +68,46 @@ class HighScores  {
     
     static let MAX_ENTRIES = 20
     
-    func append(Score: Score) {
-        if let ScoreArr = findoptionSetScores(optionSet: Score.optionSet!) {
-            Scores[ScoreArr].append(Score)
-            Scores[ScoreArr] = sortAndTrimScores(Scores: Scores[ScoreArr] as! [Score])
+    func append(Score NewScore: Score) -> Int? {
+        var ScoreArr = [Score?]()
+        
+        if let ScoreArrIdx = findoptionSetScores(optionSet: NewScore.optionSet!) {
+            ScoreArr = Scores[ScoreArrIdx]
+            ScoreArr.append(NewScore)
+            // Put it in ScoreArr, so we can easily find the position regardless
+            // but also copy back into master!
+            ScoreArr = sortAndTrimScores(Scores: ScoreArr as! [Score])
+            Scores[ScoreArrIdx] = ScoreArr
         } else {
             // No array for this option set, add it
-            let ScoreArr = [Score]
+            ScoreArr = [NewScore]
          //   ScoreArr.append(Score)
             Scores.append(ScoreArr)
         }
         saveScores()
+        
+        for i in 0..<ScoreArr.count {
+            if ScoreArr[i] === NewScore {
+                return i+1
+            }
+        }
+        return nil
      }
 
     func findoptionSetScores(optionSet: gridOptionsSet) -> Int? {
         for i in 0..<Scores.count {
             let T = Scores[i]
-            if let FirstScore = T[0]  {
-                // There is something in this slot
-                if gridOptionsSet.EQ(lhs: FirstScore.optionSet!, rhs: optionSet) {
-                    // Cool, this is the one we want
-                    return i
+            if T.count > 0 {
+                if let FirstScore = T[0]  {
+                    // There is something in this slot
+                    if gridOptionsSet.EQ(lhs: FirstScore.optionSet!, rhs: optionSet) {
+                        // Cool, this is the one we want
+                        return i
+                    }
                 }
+            } else {
+                // We have an empty array! shouldn't happen - tidy it up
+                Scores.remove(at: i)
             }
         }
         return nil
@@ -99,11 +117,19 @@ class HighScores  {
         var NewScores = Scores.sorted(by: Score.sorter)
 
         while NewScores.count > HighScores.MAX_ENTRIES {
-            NewScores.remove(at: NewScores.count - 1)
+            NewScores.removeLast()
         }
         
         return NewScores
     }
+    
+    func clearScores(optionSet: gridOptionsSet) {
+        if let ScoreArrIdx = findoptionSetScores(optionSet: optionSet) {
+            Scores.remove(at: ScoreArrIdx)
+        }
+        saveScores()
+    }
+
     
     func saveScores() {
         NSKeyedArchiver.archiveRootObject(Scores, toFile: Score.ArchiveURL.path)
@@ -131,6 +157,8 @@ class HSTableViewController: UITableViewController {
 
         if let ScoreIdx = HScores?.findoptionSetScores(optionSet: gridSettings) {
             Scores = HScores?.Scores[ScoreIdx]
+        } else {
+            Scores = nil
         }
     }
     
@@ -164,6 +192,27 @@ class HSTableViewController: UITableViewController {
 
     @IBAction func DoneSelected(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func TrashClicked(_ sender: Any) {
+        // Ask the user what they want to do, and set state accordingly
+        let alert = UIAlertController(title: "Reset High Scores", message: "Are you Sure?", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let Yes = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) { (action: UIAlertAction) -> Void in
+            self.HScores!.clearScores(optionSet: self.gridSettings)
+            self.viewDidLoad()
+            self.tableView.reloadData()
+            //DispatchQueue.main.async{
+            //    self.tableView.reloadData()
+            //}
+        }
+        
+        let No = UIAlertAction(title: "No", style: UIAlertActionStyle.cancel) { (action: UIAlertAction) -> Void in
+        }
+        
+        alert.addAction(Yes)
+        alert.addAction(No)
+        present(alert, animated: true, completion: nil)
+
     }
 }
 

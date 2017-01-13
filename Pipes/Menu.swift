@@ -57,9 +57,11 @@ class Menu: UIViewController {
         
         // From game grid: Returns Score
         if let RetScore = returnedValue as? Score {
-            Score.text = RetScore.text()
-            
-            HScores.append(Score: RetScore)
+            if let HSIndex = HScores.append(Score: RetScore) {
+                Score.text = RetScore.text() + " (High Score " + String(HSIndex) + ")"
+            } else {
+                Score.text = RetScore.text()
+            }
         }
         
         // From options: returns options set
