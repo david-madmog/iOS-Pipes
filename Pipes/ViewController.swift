@@ -28,12 +28,15 @@ class ViewController: UIViewController, GridSettingsAPI {
     @IBOutlet weak var Progress: UIProgressView!
     @IBOutlet weak var ScoreLabel: UILabel!
     
+    @IBOutlet var Panner: UIPanGestureRecognizer!
     
     //var Score: Int = 0
     private var currScore = Score()
     private var timer = Timer()
     private var TimerCounter = 0
     private var FillingInterval = 2
+    
+    let MinCellSize = CGFloat(60.0)
 
     // GridSettingsAPI
     var gridSettings : gridOptionsSet = gridOptionsSet(rows: 3, cols: 3)
@@ -50,6 +53,15 @@ class ViewController: UIViewController, GridSettingsAPI {
         currScore.optionSet = gridSettings
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(TimerFired), userInfo: nil, repeats: true)
         Grid.SetSize(rows: gridSettings.rows!, cols: gridSettings.cols!)
+        
+        // If cells will be too small, then enlarge whole grid...
+        if (Grid.bounds.width / CGFloat(gridSettings.cols!)) < MinCellSize {
+            Grid.frame.size.width = MinCellSize * CGFloat(gridSettings.cols!)
+        }
+        if (Grid.bounds.height / CGFloat(gridSettings.rows!)) < MinCellSize {
+            Grid.frame.size.height = MinCellSize * CGFloat(gridSettings.rows!)
+        }
+        
         Grid.CurrentGameMode = .Initialising
     }
 
@@ -96,6 +108,16 @@ class ViewController: UIViewController, GridSettingsAPI {
                 Grid.CurrentGameMode = .FinalFilling
             }
         case .FinalFilling:
+            // scale so we can see the whole thing
+            if Grid.bounds.width > self.view.bounds.width {
+                Grid.frame.size.width = self.view.bounds.width
+                Grid.center.x = Grid.frame.size.width / 2
+            }
+            if Grid.bounds.height > (self.view.bounds.height - UIApplication.shared.statusBarFrame.height) {
+                Grid.frame.size.height = (self.view.bounds.height - UIApplication.shared.statusBarFrame.height)
+                Grid.center.y = (Grid.frame.size.height / 2) + UIApplication.shared.statusBarFrame.height
+            }
+            
             Grid.Fill(step: 10)
             _ = Grid.isFinished() // easiest way to redraw...
         case .Spilt:
@@ -129,6 +151,38 @@ class ViewController: UIViewController, GridSettingsAPI {
         }
     }
     
+    @IBAction func PanGesture(_ sender: UIPanGestureRecognizer) {
+        var translation = sender.translation(in: self.view)
+        if let view = sender.view {
+            // BTW, we know really that view is the pipes grid, since that's the only view with a gesture recogniser
+            
+            //Lock panning to bounds of screen
+            let left = view.center.x - (view.bounds.width / 2)
+            let top = view.center.y - (view.bounds.height / 2)
+            let right = view.center.x + (view.bounds.width / 2)
+            let bottom = view.center.y + (view.bounds.height / 2)
+            
+            if view.bounds.width < self.view.bounds.width {
+                translation.x = 0
+            } else if translation.x + left > 0 {
+                translation.x = -left
+            } else if translation.x + right < self.view.bounds.width {
+                translation.x = self.view.bounds.width - right
+            }
+            
+            if view.bounds.height < (self.view.bounds.height - UIApplication.shared.statusBarFrame.height) {
+                translation.y = 0
+            } else if translation.y + top > UIApplication.shared.statusBarFrame.height {
+                translation.y = UIApplication.shared.statusBarFrame.height - top
+            } else if translation.y + bottom < self.view.bounds.height {
+                translation.y = self.view.bounds.height - bottom
+            }
+            
+            view.center = CGPoint(x:view.center.x + translation.x, y:view.center.y + translation.y)
+        }
+        sender.setTranslation(CGPoint.zero, in: self.view)
+    
+    }
     
 }
 
